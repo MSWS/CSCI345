@@ -1,0 +1,1 @@
+My assignments and miscellaneous resources for CSCI 345.
