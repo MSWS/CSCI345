@@ -1,4 +1,4 @@
-package xyz.msws.csci345.one;
+package xyz.msws.csci345;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
