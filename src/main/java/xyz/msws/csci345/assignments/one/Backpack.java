@@ -3,7 +3,7 @@ package xyz.msws.csci345.assignments.one;
 /**
  * Name: Isaac Boaz
  * Date: 09/27/23
- * Description: Assignment 1 for CSCI 345
+ * Description: Wrapper for a backpack that has {@see Pocket}s.
  */
 public class Backpack {
     /**
