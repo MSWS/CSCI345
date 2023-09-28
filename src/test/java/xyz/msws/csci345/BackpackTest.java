@@ -17,14 +17,14 @@ public class BackpackTest {
 
     @Test
     public void insertItemsInRightPocket() {
-        assertTrue(backpack.insertItemsInRightPocket(5.0));
-        assertEquals(5.0, backpack.getWeight(Backpack.Pocket.RIGHT));
+        assertTrue(backpack.insertItemsInRightPocket(4.0));
+        assertEquals(4.0, backpack.getWeight(Backpack.Pocket.RIGHT));
     }
 
     @Test
     public void insertItemsInLeftPocket() {
-        assertTrue(backpack.insertItemsInLeftPocket(5.0));
-        assertEquals(5.0, backpack.getWeight(Backpack.Pocket.LEFT));
+        assertTrue(backpack.insertItemsInLeftPocket(3.0));
+        assertEquals(3.0, backpack.getWeight(Backpack.Pocket.LEFT));
     }
 
     @Test
@@ -83,5 +83,11 @@ public class BackpackTest {
     @Test
     public void verifyOverflowCheck3() {
         assertFalse(backpack.insertItemsInMainPocket(100));
+    }
+
+    @Test
+    public void verifyUnderflowCheck() {
+        assertTrue(backpack.insertItemsInMainPocket(7.0));
+        assertFalse(backpack.removeItemsInLeftPocket(8));
     }
 }
