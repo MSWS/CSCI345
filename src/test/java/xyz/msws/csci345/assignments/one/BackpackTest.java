@@ -1,4 +1,4 @@
-package xyz.msws.csci345;
+package xyz.msws.csci345.assignments.one;
 
 import org.junit.jupiter.api.Test;
 import xyz.msws.csci345.assignments.one.Backpack;
