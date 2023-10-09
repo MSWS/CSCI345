@@ -11,17 +11,11 @@ public class Backpack {
      * Each pocket has its own associated weight and max weight.
      */
     public enum Pocket {
-        MAIN(10), LEFT(5), RIGHT(5);
-
-        private final double maxWeight;
-
-        Pocket(double maxWeight) {
-            this.maxWeight = maxWeight;
-        }
+        MAIN, LEFT, RIGHT;
     }
 
-    // Needed to fulfill the assignment requirements, but not used
-    public static final double LEFT_POCKET_MAX_WEIGHT = Pocket.LEFT.maxWeight, RIGHT_POCKET_MAX_WEIGHT = Pocket.RIGHT.maxWeight, MAIN_POCKET_MAX_WEIGHT = Pocket.MAIN.maxWeight;
+    // Needed to fulfill the assignment requirements
+    public static final double LEFT_POCKET_MAX_WEIGHT = 5, RIGHT_POCKET_MAX_WEIGHT = 5, MAIN_POCKET_MAX_WEIGHT = 10;
 
     // We could potentially use a map or enum to store the weights, but that would not meet the requirements of the assignment
     private double mainPocketWeight, leftPocketWeight, rightPocketWeight;
@@ -70,6 +64,20 @@ public class Backpack {
     }
 
     /**
+     * Gets the corresponding pocket's max weight
+     *
+     * @param pocket Pocket to get the max weight of
+     * @return Max weight of the pocket
+     */
+    public double getMaxWeight(Pocket pocket) {
+        return switch (pocket) {
+            case LEFT -> LEFT_POCKET_MAX_WEIGHT;
+            case RIGHT -> RIGHT_POCKET_MAX_WEIGHT;
+            case MAIN -> MAIN_POCKET_MAX_WEIGHT;
+        };
+    }
+
+    /**
      * Gets the total weight of the backpack from all pockets.
      *
      * @return Total weight of the backpack
@@ -89,7 +97,7 @@ public class Backpack {
      * @return True if the weight was set, false if the weight was not set due to weight restrictions
      */
     private boolean setWeight(Pocket pocket, double weight) {
-        if (weight > pocket.maxWeight) return false; // Too heavy!
+        if (weight > getMaxWeight(pocket)) return false; // Too heavy!
         if (weight < 0) return false; // Too light! Are you putting helium in it?!
         switch (pocket) {
             case LEFT -> leftPocketWeight = weight;
