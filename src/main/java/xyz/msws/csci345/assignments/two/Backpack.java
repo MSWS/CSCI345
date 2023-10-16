@@ -85,10 +85,10 @@ public class Backpack {
      * @param pocketName        Name of the pocket to print out
      */
     protected void listItemsInPocket(List<String> pocketItems, List<Double> pocketItemWeights, String pocketName) {
-        System.out.println("Listing items in " + pocketName + " pocket...\n");
+        System.out.println("Listing items in " + pocketName + " pocket...");
 
         for (int i = 0; i < pocketItems.size(); i++)
-            System.out.println("%s (%.2f)".formatted(pocketItems.get(i), pocketItemWeights.get(i)));
+            System.out.printf("%s (%.2f)\n", pocketItems.get(i), pocketItemWeights.get(i));
     }
 
     public void listItemsInMainPocket() {
