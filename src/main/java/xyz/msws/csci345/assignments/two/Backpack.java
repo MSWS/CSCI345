@@ -1,14 +1,13 @@
 package xyz.msws.csci345.assignments.two;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Name: Isaac Boaz
  * Date: 10/13/23
  * Description: A class that represents a backpack with three pockets.
  */
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Backpack {
     //Constants
     private final int MAIN_POCKET_MAX_WEIGHT = 10;
