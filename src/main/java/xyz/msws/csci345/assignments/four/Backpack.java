@@ -5,10 +5,13 @@ import java.util.Iterator;
 /**
  * Name: Isaac Boaz
  * Date: 10/31/23
- * Description: A class that represents a "physical" backpack that has three {{@link Pocket}s.
+ * Description: A class that represents a backpack that has three {{@link Pocket}s.
  * Current implementation of this backpack restricts it to three pockets. Note that an arbitrary
  * amount of pockets can be iterated over using the Backpack's {@link Backpack#iterator()} method
  * (or using an enhanced for-loop).
+ * <p>
+ * Internally, iteration is handled with the currentIteratingPocket variable.
+ * @see Backpack#next().
  */
 public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
 
@@ -55,9 +58,9 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
     //Constructors
 
     /**
-     * Default constructor for a Backpack, initializes with the static defaults for {@link Backpack}s.
+     * Default constructor for a Backpack, initializes itself with the static defaults for {@link Backpack}s.
      * <p>
-     * Underyling implementation simply calls {@link Backpack(int, int, int)}
+     * Underlying implementation simply calls {@link Backpack(int, int, int)}.
      */
     public Backpack() {
         this(MAIN_POCKET_MAX_WEIGHT, RIGHT_POCKET_MAX_WEIGHT, LEFT_POCKET_MAX_WEIGHT);
@@ -125,8 +128,8 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
 
     /**
      * Attempts to remove the given item from the main pocket.
-     * If the item is found in the pocket, the pocket's total weight
-     * is automatically adjusted.
+     * If the item is successfully removed from the pocket, the pocket's total
+     * weight is automatically adjusted.
      * If the item is not found in the pocket, an {@link ItemNotFound} exception is thrown.
      *
      * @param itemName The name of the item to remove
@@ -137,9 +140,9 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
     }
 
     /**
-     * Attempts to remove the given item from the right pocket.
-     * If the item is found in the pocket, the pocket's total weight
-     * is automatically adjusted.
+     * Attempts to remove the given item from the main pocket.
+     * If the item is successfully removed from the pocket, the pocket's total
+     * weight is automatically adjusted.
      * If the item is not found in the pocket, an {@link ItemNotFound} exception is thrown.
      *
      * @param itemName The name of the item to remove
@@ -150,9 +153,9 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
     }
 
     /**
-     * Attempts to remove the given item from the left pocket.
-     * If the item is found in the pocket, the pocket's total weight
-     * is automatically adjusted.
+     * Attempts to remove the given item from the main pocket.
+     * If the item is successfully removed from the pocket, the pocket's total
+     * weight is automatically adjusted.
      * If the item is not found in the pocket, an {@link ItemNotFound} exception is thrown.
      *
      * @param itemName The name of the item to remove
@@ -214,7 +217,7 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
     }
 
     /**
-     * Prints out the items in all of the backpack's pockets.
+     * Prints out the items in all the backpack's pockets.
      */
     public void listItemsInBackpack() {
         System.out.println("Listing all backpack items...\n");
@@ -252,7 +255,7 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
 
     /**
      * Returns the next pocket to iterate over.
-     * Pocketes are ordered as follows:
+     * Pockets are ordered as follows:
      * 0 - Left
      * 1 - Main
      * 2 - Right
@@ -260,6 +263,7 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      * @return the next pocket to iterate over.
      */
     public Pocket next() {
+        // Increment after utilization in switch.
         return switch (currentIteratingPocket++) {
             case 0 -> leftPocket;
             case 1 -> mainPocket;
@@ -279,17 +283,10 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
     }
 
     /**
-     * Exceptions require a cause to be included (that presumably specifies
-     * the underlying operation that caused the Exception [insert / remove]).
-     *
-     */
-
-    /**
      * Super class to allow for easily formatting messages alongside supplying a {@link Throwable} cause.
      * In this project all exceptions are expected to have a Cause, as such this class
-     * ensures that all exceptions have a cause. Ideally all constructions of this class
-     * should specify an underlying cause, otherwise the cause will be a generic {@link Exception}
-     * with the message "Unknown cause".
+     * ensures this. Ideally, all constructions of this class should specify an underlying cause,
+     * otherwise the cause will be a generic {@link Exception}  with the message "Unknown cause".
      */
     public static class CausedException extends Exception {
         /**
@@ -353,7 +350,7 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
     }
 
     /**
-     * Thrown when an item's weight is invalid (ie non-positive).
+     * Thrown when an item's weight is invalid (ie negative).
      */
     public static class ItemWeightInvalid extends CausedException {
         /**
@@ -391,6 +388,17 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
          */
         public ItemOverweight(String itemNotFoundException, Object... args) {
             super(itemNotFoundException, args);
+        }
+
+        /**
+         * A default helper constructor to easily format the exception message.
+         *
+         * @param itemNotFoundException The message to be formatted.
+         * @param cause                 The underlying cause of this exception.
+         * @param args                  Optional varargs to format the string according to Java formatting specifications.
+         */
+        public ItemOverweight(String itemNotFoundException, Throwable cause, Object... args) {
+            super(itemNotFoundException, cause, args);
         }
     }
 }
