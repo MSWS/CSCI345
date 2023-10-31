@@ -130,7 +130,7 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      * Attempts to remove the given item from the main pocket.
      * If the item is successfully removed from the pocket, the pocket's total
      * weight is automatically adjusted.
-     * If the item is not found in the pocket, an {@link ItemNotFound} exception is thrown.
+     * If the item is not found in the pocket, an {@link ItemNotFoundException} exception is thrown.
      *
      * @param itemName The name of the item to remove
      * @throws Exception If the item is not found in the pocket
@@ -143,7 +143,7 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      * Attempts to remove the given item from the main pocket.
      * If the item is successfully removed from the pocket, the pocket's total
      * weight is automatically adjusted.
-     * If the item is not found in the pocket, an {@link ItemNotFound} exception is thrown.
+     * If the item is not found in the pocket, an {@link ItemNotFoundException} exception is thrown.
      *
      * @param itemName The name of the item to remove
      * @throws Exception If the item is not found in the pocket
@@ -156,7 +156,7 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      * Attempts to remove the given item from the main pocket.
      * If the item is successfully removed from the pocket, the pocket's total
      * weight is automatically adjusted.
-     * If the item is not found in the pocket, an {@link ItemNotFound} exception is thrown.
+     * If the item is not found in the pocket, an {@link ItemNotFoundException} exception is thrown.
      *
      * @param itemName The name of the item to remove
      * @throws Exception If the item is not found in the pocket
@@ -280,125 +280,5 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
     public Iterator<Pocket> iterator() {
         currentIteratingPocket = 0;
         return this;
-    }
-
-    /**
-     * Super class to allow for easily formatting messages alongside supplying a {@link Throwable} cause.
-     * In this project all exceptions are expected to have a Cause, as such this class
-     * ensures this. Ideally, all constructions of this class should specify an underlying cause,
-     * otherwise the cause will be a generic {@link Exception}  with the message "Unknown cause".
-     */
-    public static class CausedException extends Exception {
-        /**
-         * A default helper constructor to easily format the exception message.
-         *
-         * @param itemNotFoundException The message to be formatted.
-         * @param args                  Optional varargs to format the string according to Java formatting specifications.
-         */
-        public CausedException(String itemNotFoundException, Object... args) {
-            super(itemNotFoundException.formatted(args), new Exception("Unknown cause"));
-        }
-
-        /**
-         * A helper constructor to easily format the exception message with a Throwable cause.
-         *
-         * @param itemNotFoundException The message to be formatted.
-         * @param cause                 The underlying cause of this exception.
-         * @param args                  Optional varargs to format the string according to Java formatting specifications.
-         */
-        public CausedException(String itemNotFoundException, Throwable cause, Object... args) {
-            super(itemNotFoundException.formatted(args), cause);
-        }
-
-        /**
-         * A helper constructor to easily format the exception message with a String cause.
-         *
-         * @param itemNotFoundException The message to be formatted.
-         * @param cause                 The underlying cause of this exception.
-         * @param args                  Optional varargs to format the string according to Java formatting specifications.
-         */
-        public CausedException(String itemNotFoundException, String cause, Object... args) {
-            super(itemNotFoundException.formatted(args), new Exception(cause));
-        }
-    }
-
-    /**
-     * Thrown when an item is not found in a pocket.
-     */
-    public static class ItemNotFound extends CausedException {
-        /**
-         * A default helper constructor to easily format the exception message.
-         *
-         * @param itemNotFoundException The message to be formatted.
-         * @param cause                 The underlying cause of this exception.
-         * @param args                  Optional varargs to format the string according to Java formatting specifications.
-         */
-        public ItemNotFound(String itemNotFoundException, Throwable cause, Object... args) {
-            super(itemNotFoundException, cause, args);
-        }
-
-        /**
-         * A helper constructor to easily format the exception message.
-         *
-         * @param itemNotFoundException The message to be formatted.
-         * @param cause                 The underlying cause of this exception.
-         * @param args                  Optional varargs to format the string according to Java formatting specifications.
-         */
-        public ItemNotFound(String itemNotFoundException, String cause, Object... args) {
-            super(itemNotFoundException, new Exception(cause), args);
-        }
-    }
-
-    /**
-     * Thrown when an item's weight is invalid (ie negative).
-     */
-    public static class ItemWeightInvalid extends CausedException {
-        /**
-         * A default helper constructor to easily format the exception message.
-         *
-         * @param itemNotFoundException The message to be formatted.
-         * @param args                  Optional varargs to format the string according to Java formatting specifications.
-         */
-        public ItemWeightInvalid(String itemNotFoundException, Object... args) {
-            super(itemNotFoundException, args);
-        }
-
-        /**
-         * A default helper constructor to easily format the exception message.
-         *
-         * @param itemNotFoundException The message to be formatted.
-         * @param cause                 The underlying cause of this exception.
-         * @param args                  Optional varargs to format the string according to Java formatting specifications.
-         */
-        public ItemWeightInvalid(String itemNotFoundException, Throwable cause, Object... args) {
-            super(itemNotFoundException, cause, args);
-        }
-    }
-
-    /**
-     * Thrown when adding an item weight would exceed the max weight of a pocket
-     * due to the item's weight in combination with the existing weight of the items.
-     */
-    public static class ItemOverweight extends CausedException {
-        /**
-         * A default helper constructor to easily format the exception message.
-         *
-         * @param itemNotFoundException The message to be formatted.
-         * @param args                  Optional varargs to format the string according to Java formatting specifications.
-         */
-        public ItemOverweight(String itemNotFoundException, Object... args) {
-            super(itemNotFoundException, args);
-        }
-
-        /**
-         * A default helper constructor to easily format the exception message.
-         *
-         * @param itemNotFoundException The message to be formatted.
-         * @param cause                 The underlying cause of this exception.
-         * @param args                  Optional varargs to format the string according to Java formatting specifications.
-         */
-        public ItemOverweight(String itemNotFoundException, Throwable cause, Object... args) {
-            super(itemNotFoundException, cause, args);
-        }
     }
 }

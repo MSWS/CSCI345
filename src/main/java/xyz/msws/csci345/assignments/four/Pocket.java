@@ -47,26 +47,26 @@ public class Pocket implements Iterable<BackpackItem> {
      * Attempts to insert a {@link BackpackItem} corresponding to the given parameters into the pocket.
      * Creates a new {@link BackpackItem} object using the given parameters.
      * <p>
-     * If the item weight is less than 0, throws an {@link Backpack.ItemWeightInvalid} exception.
+     * If the item weight is less than 0, throws an {@link ItemWeightInvalidException} exception.
      * If adding the item would cause the pocket's maximum weight to be exceeded, throws a
-     * {@link Backpack.ItemOverweight} exception.
+     * {@link ItemOverweightException} exception.
      *
      * @param itemName   The name of the item to be inserted.
      * @param itemWeight The weight of the item to be inserted.
-     * @throws Exception If the item weight is less than 0, throws an {@link Backpack.ItemWeightInvalid} exception.
+     * @throws Exception If the item weight is less than 0, throws an {@link ItemWeightInvalidException} exception.
      *                   If adding the item would cause the pocket's maximum weight to be exceeded,
-     *                   throws a {@link Backpack.ItemOverweight} exception.
+     *                   throws a {@link ItemOverweightException} exception.
      */
     public void insertItemInPocket(String itemName, double itemWeight) throws Exception {
         // Slightly reduce line clutter by storing identical suffixes in a variable.
         String suffix = "Item name: %s Item weight: %.2f".formatted(itemName, itemWeight);
 
         if (itemWeight < 0) // If the item weight is less than 0, throw an exception.
-            throw new Backpack.ItemWeightInvalid("Invalid weight exception. " + suffix);
+            throw new ItemWeightInvalidException("Invalid weight exception. " + suffix);
 
         if (getPocketTotalWeight() + itemWeight > maxPocketWeight)
             // Adding the item would cause the pocket's maximum weight to be exceeded, throw an exception.
-            throw new Backpack.ItemOverweight(
+            throw new ItemOverweightException(
                     "Weight exceeded exception. Current pocket weight: %.2f Maximum pocket weight: %d " + suffix,
                     new Exception("Insert"),
                     getPocketTotalWeight(), maxPocketWeight);
@@ -78,10 +78,10 @@ public class Pocket implements Iterable<BackpackItem> {
     /**
      * Attempts to remove a {@link BackpackItem} with the same name as the given parameter from the pocket.
      * <p>
-     * If no item with the given name is found, throws a {@link Backpack.ItemNotFound} exception.
+     * If no item with the given name is found, throws a {@link ItemNotFoundException} exception.
      *
      * @param itemName The name of the item to be removed.
-     * @throws Exception If no item with the given name is found, throws a {@link Backpack.ItemNotFound} exception.
+     * @throws Exception If no item with the given name is found, throws a {@link ItemNotFoundException} exception.
      */
     public void removeItemFromPocket(String itemName) throws Exception {
         if (pocketItems.removeIf(item -> item.itemName.equals(itemName))) return;
@@ -89,7 +89,7 @@ public class Pocket implements Iterable<BackpackItem> {
         // Since removeIf returns true if we removed the item, we can assume that if we reach this point,
         // the item was not found. Thus, we throw an exception.
 
-        throw new Backpack.ItemNotFound("Item not found exception. Item name: %s", "Remove", itemName);
+        throw new ItemNotFoundException("Item not found exception. Item name: %s", "Remove", itemName);
     }
 
     /**
