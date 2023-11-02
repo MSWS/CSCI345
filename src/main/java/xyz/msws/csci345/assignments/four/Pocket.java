@@ -53,11 +53,10 @@ public class Pocket implements Iterable<BackpackItem> {
      *
      * @param itemName   The name of the item to be inserted.
      * @param itemWeight The weight of the item to be inserted.
-     * @throws Exception If the item weight is less than 0, throws an {@link ItemWeightInvalidException} exception.
-     *                   If adding the item would cause the pocket's maximum weight to be exceeded,
-     *                   throws a {@link ItemOverweightException} exception.
+     * @throws ItemOverweightException   If adding the item would cause the pocket's maximum weight to be exceeded.
+     * @throws ItemWeightInvalidException If the item weight is less than 0.
      */
-    public void insertItemInPocket(String itemName, double itemWeight) throws Exception {
+    public void insertItemInPocket(String itemName, double itemWeight) throws ItemOverweightException, ItemWeightInvalidException {
         // Slightly reduce line clutter by storing identical suffixes in a variable.
         String suffix = "Item name: %s Item weight: %.2f".formatted(itemName, itemWeight);
 
@@ -81,9 +80,9 @@ public class Pocket implements Iterable<BackpackItem> {
      * If no item with the given name is found, throws a {@link ItemNotFoundException} exception.
      *
      * @param itemName The name of the item to be removed.
-     * @throws Exception If no item with the given name is found, throws a {@link ItemNotFoundException} exception.
+     * @throws ItemNotFoundException If no item with the given name is found.
      */
-    public void removeItemFromPocket(String itemName) throws Exception {
+    public void removeItemFromPocket(String itemName) throws ItemNotFoundException {
         if (pocketItems.removeIf(item -> item.itemName.equals(itemName))) return;
 
         // Since removeIf returns true if we removed the item, we can assume that if we reach this point,

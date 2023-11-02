@@ -6,12 +6,12 @@ import java.util.Iterator;
  * Name: Isaac Boaz
  * Date: 10/31/23
  * Description: A class that represents a backpack that has three {{@link Pocket}s.
- * Current implementation of this backpack restricts it to three pockets. Note that an arbitrary
- * amount of pockets can be iterated over using the Backpack's {@link Backpack#iterator()} method
- * (or using an enhanced for-loop).
- * <p>
- * Internally, iteration is handled with the currentIteratingPocket variable.
- * @see Backpack#next().
+ *     Current implementation of this backpack restricts it to three pockets. Note that an arbitrary
+ *     amount of pockets can be iterated over using the Backpack's {@link Backpack#iterator()} method
+ *     (or using an enhanced for-loop).
+ *     <p>
+ *     Internally, iteration is handled with the currentIteratingPocket variable.
+ *     @see Backpack#next().
  */
 public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
 
@@ -90,9 +90,10 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      *
      * @param itemName   The name of the item to insert
      * @param itemWeight The weight of the item to insert
-     * @throws Exception If the weight is invalid
+     * @throws ItemOverweightException If inserting the item would cause the pocket's max weight to be exceeded
+     * @throws ItemWeightInvalidException If the item's weight is invalid
      */
-    public void insertItemInMainPocket(String itemName, double itemWeight) throws Exception {
+    public void insertItemInMainPocket(String itemName, double itemWeight) throws ItemOverweightException, ItemWeightInvalidException {
         mainPocket.insertItemInPocket(itemName, itemWeight);
     }
 
@@ -105,9 +106,10 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      *
      * @param itemName   The name of the item to insert
      * @param itemWeight The weight of the item to insert
-     * @throws Exception If the weight is invalid
+     * @throws ItemOverweightException If inserting the item would cause the pocket's max weight to be exceeded
+     * @throws ItemWeightInvalidException If the item's weight is invalid
      */
-    public void insertItemInRightPocket(String itemName, double itemWeight) throws Exception {
+    public void insertItemInRightPocket(String itemName, double itemWeight) throws ItemOverweightException, ItemWeightInvalidException {
         rightPocket.insertItemInPocket(itemName, itemWeight);
     }
 
@@ -120,9 +122,10 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      *
      * @param itemName   The name of the item to insert
      * @param itemWeight The weight of the item to insert
-     * @throws Exception If the weight is invalid
+     * @throws ItemOverweightException If inserting the item would cause the pocket's max weight to be exceeded
+     * @throws ItemWeightInvalidException If the item's weight is invalid
      */
-    public void insertItemInLeftPocket(String itemName, double itemWeight) throws Exception {
+    public void insertItemInLeftPocket(String itemName, double itemWeight) throws ItemOverweightException, ItemWeightInvalidException {
         leftPocket.insertItemInPocket(itemName, itemWeight);
     }
 
@@ -130,12 +133,11 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      * Attempts to remove the given item from the main pocket.
      * If the item is successfully removed from the pocket, the pocket's total
      * weight is automatically adjusted.
-     * If the item is not found in the pocket, an {@link ItemNotFoundException} exception is thrown.
      *
      * @param itemName The name of the item to remove
-     * @throws Exception If the item is not found in the pocket
+     * @throws ItemNotFoundException If the item is not found in the pocket
      */
-    public void removeItemFromMainPocket(String itemName) throws Exception {
+    public void removeItemFromMainPocket(String itemName) throws ItemNotFoundException {
         mainPocket.removeItemFromPocket(itemName);
     }
 
@@ -146,9 +148,9 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      * If the item is not found in the pocket, an {@link ItemNotFoundException} exception is thrown.
      *
      * @param itemName The name of the item to remove
-     * @throws Exception If the item is not found in the pocket
+     * @throws ItemNotFoundException If the item is not found in the pocket
      */
-    public void removeItemFromRightPocket(String itemName) throws Exception {
+    public void removeItemFromRightPocket(String itemName) throws ItemNotFoundException {
         rightPocket.removeItemFromPocket(itemName);
     }
 
@@ -159,9 +161,9 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      * If the item is not found in the pocket, an {@link ItemNotFoundException} exception is thrown.
      *
      * @param itemName The name of the item to remove
-     * @throws Exception If the item is not found in the pocket
+     * @throws ItemNotFoundException If the item is not found in the pocket
      */
-    public void removeItemFromLeftPocket(String itemName) throws Exception {
+    public void removeItemFromLeftPocket(String itemName) throws ItemNotFoundException {
         leftPocket.removeItemFromPocket(itemName);
     }
 
@@ -228,7 +230,7 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
     }
 
     /**
-     * Returns the total weight of all the items in the backpack.
+     * Returns the total weight of all items in the backpack.
      * This is the same as calling {@link Backpack#getLeftPocketTotalWeight()}, {@link Backpack#getMainPocketTotalWeight()},
      * and {@link Backpack#getRightPocketTotalWeight()} and adding them together.
      *
@@ -245,7 +247,8 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
     }
 
     /**
-     * Returns true if there is another pocket to iterate over.
+     * Returns true if there is another pocket to iterate over, meaning that {@link Backpack#next()}
+     * will not return null.
      *
      * @return true if there is another pocket to iterate over.
      */
@@ -260,10 +263,11 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      * 1 - Main
      * 2 - Right
      *
-     * @return the next pocket to iterate over.
+     * @return the next pocket to iterate over, or null if there are no more pockets to iterate over.
      */
     public Pocket next() {
-        // Increment after utilization in switch.
+        // Enhanced switch block, returns the pocket corresponding to the currentIteratingPocket value.
+        // Once we've evaluated the value of currentIteratingPocket, we increment it.
         return switch (currentIteratingPocket++) {
             case 0 -> leftPocket;
             case 1 -> mainPocket;
@@ -278,6 +282,7 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      * @return an iterator for the backpack's pockets.
      */
     public Iterator<Pocket> iterator() {
+        // Reset our iteration counter.
         currentIteratingPocket = 0;
         return this;
     }

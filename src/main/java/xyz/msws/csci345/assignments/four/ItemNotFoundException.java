@@ -2,7 +2,9 @@ package xyz.msws.csci345.assignments.four;
 
 
 /**
- * Thrown when an item is not found in a pocket.
+ * Name: Isaac Boaz
+ * Date: 10/31/23
+ * Description: Thrown when an item is not found in a pocket.
  */
 public class ItemNotFoundException extends CausedException {
     /**
