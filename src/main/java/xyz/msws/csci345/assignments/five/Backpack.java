@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 /**
  * Name: Isaac Boaz
- * Date: 10/31/23
+ * Date: 11/06/23
  * Description: A class that represents a backpack that has three {{@link Pocket}s.
  * Current implementation of this backpack restricts it to three pockets. Note that an arbitrary
  * amount of pockets can be iterated over using the Backpack's {@link Backpack#iterator()} method
@@ -67,6 +67,13 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
         this(MAIN_POCKET_MAX_WEIGHT, RIGHT_POCKET_MAX_WEIGHT, LEFT_POCKET_MAX_WEIGHT);
     }
 
+    /**
+     * Constructs a deep clone of the backpack with the same
+     * left, main, and right pockets. Pocket items are also
+     * deep cloned.
+     *
+     * @param original The backpack to clone
+     */
     public Backpack(Backpack original) {
         this.mainPocket = new Pocket(original.mainPocket);
         this.rightPocket = new Pocket(original.rightPocket);

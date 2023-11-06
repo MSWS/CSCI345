@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Name: Isaac Boaz
- * Date: 10/31/23
+ * Date: 11/06/23
  * Description: A pocket which holds {@link BackpackItem}s. Each pocket has its own maximum weight.
  */
 public class Pocket implements Iterable<BackpackItem> {
@@ -42,6 +42,12 @@ public class Pocket implements Iterable<BackpackItem> {
         this.pocketItems = new ArrayList<>();
     }
 
+    /**
+     * Constructs a deep clone of the pocket with the same name,
+     * max weight, and items.
+     *
+     * @param pocket The pocket to clone
+     */
     public Pocket(Pocket pocket) {
         this.pocketName = pocket.pocketName;
         this.maxPocketWeight = pocket.maxPocketWeight;

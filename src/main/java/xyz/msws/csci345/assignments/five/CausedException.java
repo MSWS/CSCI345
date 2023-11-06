@@ -2,7 +2,7 @@ package xyz.msws.csci345.assignments.five;
 
 /**
  * Name: Isaac Boaz
- * Date: 10/31/23
+ * Date: 11/06/23
  * Description: Super class to allow for easily formatting messages alongside supplying a {@link Throwable} cause.
  *     In this project all exceptions are expected to have a Cause, as such this class
  *     ensures this. Ideally, all constructions of this class should specify an underlying cause,

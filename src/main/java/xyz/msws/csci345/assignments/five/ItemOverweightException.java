@@ -2,7 +2,7 @@ package xyz.msws.csci345.assignments.five;
 
 /**
  * Name: Isaac Boaz
- * Date: 10/31/23
+ * Date: 11/06/23
  * Description: Thrown when adding an item weight would exceed the max weight of a pocket
  *     due to the item's weight in combination with the existing weight of the items.
  */

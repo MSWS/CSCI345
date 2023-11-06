@@ -1,9 +1,8 @@
 package xyz.msws.csci345.assignments.five;
 
-
 /**
  * Name: Isaac Boaz
- * Date: 10/31/23
+ * Date: 11/06/23
  * Description: Thrown when an item is not found in a pocket.
  */
 public class ItemNotFoundException extends CausedException {
