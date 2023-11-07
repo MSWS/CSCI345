@@ -152,10 +152,17 @@ public class Pocket implements Iterable<BackpackItem> {
 
         if (other.pocketItems.size() != this.pocketItems.size()) return false;
 
-        // Make clones to easily manipulate underlying pockets to check for equality.
-        // Since order does not matter, we simply go per item through one of
-        // the pockets and remove the corresponding item from both pockets.
-        // Logically, if the pockets are equal, they should both be empty at the end.
+        /*
+            Make clones to easily manipulate underlying pockets to check for equality.
+            Since order does not matter, we simply go per item through one of
+            the pockets and remove the corresponding item from both pockets.
+            Logically, if the pockets are equal, they should both be empty at the end.
+
+            Note that we can't use containsAll in this case since containsAll does
+            not check for duplicates / same NUMBER of elements. Rather, it checks if
+            for all a in A, a is in B, and vice versa.
+            ie a, a, b contains all a, b, b, which is not what we want.
+        */
 
         Pocket clonedOriginal = new Pocket(this), clonedOther = new Pocket(other);
         Iterator<BackpackItem> originalIterator = clonedOriginal.iterator();
