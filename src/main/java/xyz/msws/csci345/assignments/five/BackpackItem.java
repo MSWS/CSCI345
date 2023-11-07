@@ -25,4 +25,18 @@ public class BackpackItem {
         this.itemName = itemName;
         this.itemWeight = itemWeight;
     }
+
+    /**
+     * Returns true if the name and weight of the item are equal.
+     *
+     * @param obj The object to compare to.
+     * @return True if the name and weight of the item are equal.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof BackpackItem other)) return false;
+        if (!other.itemName.equals(itemName)) return false;
+        if (other.itemWeight != itemWeight) return false;
+        return true;
+    }
 }

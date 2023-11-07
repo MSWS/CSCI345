@@ -138,7 +138,7 @@ public class Pocket implements Iterable<BackpackItem> {
     /**
      * Compares two pockets for equality, two pockets are considered
      * equal if they have the same name, maximum weight, and items.
-     * Items are considered equal if they have the same name and weight.
+     * The order of the items does not matter.
      *
      * @param obj The object to compare to.
      * @return true if the pockets are equal, false otherwise.
@@ -150,19 +150,26 @@ public class Pocket implements Iterable<BackpackItem> {
         if (!other.pocketName.equals(this.pocketName)) return false;
         if (other.maxPocketWeight != this.maxPocketWeight) return false;
 
-        // By default, #equals checks object references.
-        // Since we didn't implement BackpackItem#equals, we can't use this.
-        // if (!other.pocketItems.equals(this.pocketItems)) return false;
-
-        // Instead we have to manually check each item.
         if (other.pocketItems.size() != this.pocketItems.size()) return false;
-        for (int i = 0; i < this.pocketItems.size(); i++) {
-            BackpackItem a = this.pocketItems.get(i);
-            BackpackItem b = other.pocketItems.get(i);
-            if (!a.itemName.equals(b.itemName)) return false;
-            if (a.itemWeight != b.itemWeight) return false;
+
+        // Make clones to easily manipulate underlying pockets to check for equality.
+        // Since order does not matter, we simply go per item through one of
+        // the pockets and remove the corresponding item from both pockets.
+        // Logically, if the pockets are equal, they should both be empty at the end.
+
+        Pocket clonedOriginal = new Pocket(this), clonedOther = new Pocket(other);
+        Iterator<BackpackItem> originalIterator = clonedOriginal.iterator();
+        while (originalIterator.hasNext()) {
+            BackpackItem originalItem = originalIterator.next();
+            // Since we've implemented BackpackItem#equals, we can just
+            // use List#remove
+            if (!clonedOther.pocketItems.remove(originalItem)) return false;
+            originalIterator.remove();
         }
 
+        // If either pocket is not entirely empty, they are not equal.
+        if (!clonedOriginal.pocketItems.isEmpty() || !clonedOther.pocketItems.isEmpty())
+            return false;
         return true;
     }
 
