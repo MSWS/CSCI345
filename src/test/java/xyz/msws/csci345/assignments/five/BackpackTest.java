@@ -9,7 +9,7 @@ public class BackpackTest {
     private final Backpack backpack = new Backpack();
 
     @Test
-    public void testBackpack() throws ItemOverweightException, ItemWeightInvalidException {
+    public void testBackpack() throws Exception {
         assertNotNull(backpack, "Backpack is null");
         backpack.insertItemInLeftPocket("Left", 1);
         backpack.insertItemInMainPocket("Main", 2);
@@ -18,7 +18,7 @@ public class BackpackTest {
     }
 
     @Test
-    public void testPocketWeight() throws ItemOverweightException, ItemWeightInvalidException {
+    public void testPocketWeight() throws Exception {
         backpack.insertItemInLeftPocket("First Half-Weight", 2.5);
         backpack.insertItemInLeftPocket("Second Half-Weight", 2.5);
 
@@ -37,7 +37,7 @@ public class BackpackTest {
     }
 
     @Test
-    public void testPocketNaming() throws ItemOverweightException, ItemWeightInvalidException, ItemNotFoundException {
+    public void testPocketNaming() throws Exception {
         backpack.insertItemInLeftPocket("Left-Foo", 1);
         backpack.insertItemInMainPocket("Main-Foo", 1);
         backpack.insertItemInRightPocket("Right-Foo", 1);
@@ -52,7 +52,7 @@ public class BackpackTest {
     }
 
     @Test
-    public void testPocketSeparation() throws ItemOverweightException, ItemWeightInvalidException, ItemNotFoundException {
+    public void testPocketSeparation() throws Exception {
         backpack.insertItemInLeftPocket("Left-Foo", 1);
 
         assertThrows(ItemNotFoundException.class, () -> backpack.removeItemFromMainPocket("Left-Foo"), "Left-Foo was removed from main pocket");
@@ -93,7 +93,7 @@ public class BackpackTest {
     }
 
     @Test
-    public void testPocketEquality() throws CloneNotSupportedException, ItemOverweightException, ItemWeightInvalidException {
+    public void testPocketEquality() throws Exception {
         Pocket foo = new Pocket("Foo", 10);
         Pocket bar = new Pocket("Bar", 10);
         assertNotEquals(foo, bar, "Foo is equal to bar");
@@ -123,7 +123,7 @@ public class BackpackTest {
     }
 
     @Test
-    public void testPocketCardinality() throws ItemOverweightException, ItemWeightInvalidException {
+    public void testPocketCardinality() throws Exception {
         Pocket foo = new Pocket("Foo", 10);
         Pocket bar = new Pocket("Foo", 10);
 
@@ -149,5 +149,25 @@ public class BackpackTest {
         bar.insertItemInPocket("Foo", 1);
 
         assertEquals(foo, bar, "Foo is not equal to bar");
+    }
+
+    @Test
+    public void testPocketCloning() throws CloneNotSupportedException {
+        Pocket foo = new Pocket("Foo", 10);
+        Pocket clone = (Pocket) foo.clone();
+        assertNotSame(foo, clone);
+
+        clone = new Pocket(foo);
+        assertNotSame(foo, clone);
+    }
+
+    @Test
+    public void testPocketItemCloning() throws Exception {
+        Pocket foo = new Pocket("Foo", 10);
+        foo.insertItemInPocket("Foo", 9);
+        Pocket clone = new Pocket(foo);
+        foo.removeItemFromPocket("Foo");
+        assertThrows(ItemNotFoundException.class, () -> foo.removeItemFromPocket("Foo"), "Item was removed from foo");
+        assertThrows(ItemOverweightException.class, () -> clone.insertItemInPocket("Foo", 9), "Item was inserted into clone");
     }
 }
