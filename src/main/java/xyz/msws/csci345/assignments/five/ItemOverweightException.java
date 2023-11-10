@@ -10,17 +10,6 @@ public class ItemOverweightException extends CausedException {
     /**
      * A default helper constructor to easily format the exception message.
      *
-     * @deprecated Use {@link #ItemOverweightException(String, Throwable, Object...)} instead.
-     * @param itemNotFoundException The message to be formatted.
-     * @param args                  Optional varargs to format the string according to Java formatting specifications.
-     */
-    public ItemOverweightException(String itemNotFoundException, Object... args) {
-        super(itemNotFoundException, args);
-    }
-
-    /**
-     * A default helper constructor to easily format the exception message.
-     *
      * @param itemNotFoundException The message to be formatted.
      * @param cause                 The underlying cause of this exception.
      * @param args                  Optional varargs to format the string according to Java formatting specifications.

@@ -107,7 +107,7 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      * @throws ItemOverweightException    If inserting the item would cause the pocket's max weight to be exceeded
      * @throws ItemWeightInvalidException If the item's weight is invalid
      */
-    public void insertItemInMainPocket(String itemName, double itemWeight) throws ItemOverweightException, ItemWeightInvalidException {
+    public void insertItemInMainPocket(String itemName, double itemWeight) throws Exception {
         mainPocket.insertItemInPocket(itemName, itemWeight);
     }
 
@@ -123,7 +123,7 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      * @throws ItemOverweightException    If inserting the item would cause the pocket's max weight to be exceeded
      * @throws ItemWeightInvalidException If the item's weight is invalid
      */
-    public void insertItemInRightPocket(String itemName, double itemWeight) throws ItemOverweightException, ItemWeightInvalidException {
+    public void insertItemInRightPocket(String itemName, double itemWeight) throws Exception {
         rightPocket.insertItemInPocket(itemName, itemWeight);
     }
 
@@ -139,7 +139,7 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      * @throws ItemOverweightException    If inserting the item would cause the pocket's max weight to be exceeded
      * @throws ItemWeightInvalidException If the item's weight is invalid
      */
-    public void insertItemInLeftPocket(String itemName, double itemWeight) throws ItemOverweightException, ItemWeightInvalidException {
+    public void insertItemInLeftPocket(String itemName, double itemWeight) throws Exception {
         leftPocket.insertItemInPocket(itemName, itemWeight);
     }
 
@@ -151,7 +151,7 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      * @param itemName The name of the item to remove
      * @throws ItemNotFoundException If the item is not found in the pocket
      */
-    public void removeItemFromMainPocket(String itemName) throws ItemNotFoundException {
+    public void removeItemFromMainPocket(String itemName) throws Exception {
         mainPocket.removeItemFromPocket(itemName);
     }
 
@@ -164,7 +164,7 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      * @param itemName The name of the item to remove
      * @throws ItemNotFoundException If the item is not found in the pocket
      */
-    public void removeItemFromRightPocket(String itemName) throws ItemNotFoundException {
+    public void removeItemFromRightPocket(String itemName) throws Exception {
         rightPocket.removeItemFromPocket(itemName);
     }
 
@@ -177,7 +177,7 @@ public class Backpack implements Iterable<Pocket>, Iterator<Pocket> {
      * @param itemName The name of the item to remove
      * @throws ItemNotFoundException If the item is not found in the pocket
      */
-    public void removeItemFromLeftPocket(String itemName) throws ItemNotFoundException {
+    public void removeItemFromLeftPocket(String itemName) throws Exception {
         leftPocket.removeItemFromPocket(itemName);
     }
 

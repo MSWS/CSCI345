@@ -10,17 +10,6 @@ package xyz.msws.csci345.assignments.five;
  */
 public class CausedException extends Exception {
     /**
-     * A default helper constructor to easily format the exception message.
-     *
-     * @deprecated Use {@link #CausedException(String, Throwable, Object...)} instead.
-     * @param itemNotFoundException The message to be formatted.
-     * @param args                  Optional varargs to format the string according to Java formatting specifications.
-     */
-    public CausedException(String itemNotFoundException, Object... args) {
-        super(itemNotFoundException.formatted(args), new Exception("Unknown cause"));
-    }
-
-    /**
      * A helper constructor to easily format the exception message with a Throwable cause.
      *
      * @param itemNotFoundException The message to be formatted.
